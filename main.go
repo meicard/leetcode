@@ -38,7 +38,9 @@ var (
 	storyInfo     []StoryIndex
 	staticFileSet        = make(map[string]bool)
 	storyInfoFile string = filepath.Join("./data", "storyInfo.json")
-	templates            = template.Must(template.ParseFiles(filepath.Join("./tmpl", pageTemplate), filepath.Join("./tmpl", storyTemplate)))
+	templates            = template.Must(
+		template.ParseFiles(filepath.Join("./tmpl", pageTemplate),
+			filepath.Join("./tmpl", storyTemplate)))
 )
 
 type Page struct {
@@ -101,14 +103,17 @@ func loadPage(num string) (*Page, error) {
 	var nav bytes.Buffer
 	nav.WriteString(`<nav><ul class="pager">`)
 	if n > 1 {
-		nav.WriteString(fmt.Sprintf(`<li><a href="/service/page/%d">前一页</a></li>`, n-1))
+		nav.WriteString(fmt.Sprintf(
+			`<li><a href="/service/page/%d">前一页</a></li>`, n-1))
 	}
 	if n < pages {
-		nav.WriteString(fmt.Sprintf(`<li><a href="/service/page/%d">后一页</a></li>`, n+1))
+		nav.WriteString(fmt.Sprintf(
+			`<li><a href="/service/page/%d">后一页</a></li>`, n+1))
 	}
 	nav.WriteString("</ul></nav>")
 
-	return &Page{Content: template.HTML(post.String()), Nav: template.HTML(nav.String()), Featured: ""}, nil
+	return &Page{Content: template.HTML(post.String()),
+		Nav: template.HTML(nav.String()), Featured: ""}, nil
 }
 
 func loadStory(title string) (*Story, error) {
